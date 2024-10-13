@@ -3,11 +3,6 @@ local branch = getgenv().mspaint_dev_mode and "dev" or "main"
 local HttpService = game:GetService("HttpService")
 local baseURL = "https://raw.githubusercontent.com/KedisPL/mspaint-for-doors-fan-games/" .. branch
 
-export type gameMapping = {
-    exclusions: table?,
-    main: string
-}
-
 if not getgenv().ExecutorSupport then
     loadstring(game:HttpGet(baseURL .. "/executorTest.lua"))()
 end
@@ -55,12 +50,7 @@ if not getgenv().BloxstrapRPC then
     getgenv().BloxstrapRPC = BloxstrapRPC
 end
 
-local mapping: gameMapping = HttpService:JSONDecode(game:HttpGet(baseURL .. "/mappings/" .. game.GameId .. ".json"))
-local scriptPath = mapping.main
-
-if mapping.exclusions and mapping.exclusions[tostring(game.PlaceId)] then
-    scriptPath = mapping.exclusions[tostring(game.PlaceId)]
-end
+local scriptPath = "/places/doors/doors.lua"
 
 loadstring(game:HttpGet(baseURL .. scriptPath))()
 
